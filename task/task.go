@@ -57,7 +57,7 @@ func (t *TaskTracker) Add(str string) {
 
 func (t *TaskTracker) SetTrack(str string) Task {
 	id := t.Size + 1
-	status := false
+	status := 0
 	year := strconv.Itoa(time.Now().Year())
 	mo := int(time.Now().Month())
 	month := ""
