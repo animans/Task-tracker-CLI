@@ -165,4 +165,5 @@ func (t *TaskTracker) MarkProgress(num, stat int) {
 		return
 	}
 	t.TaskTrack[num-1].Status = stat
+	t.TaskTrack[num-1].UpdatedAt = t.SetDate()
 }
