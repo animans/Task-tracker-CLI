@@ -11,11 +11,11 @@ type Task struct {
 	Description string `json:"description"`
 	Status      int    `json:"status"`
 	CreatedAt   string `json:"createdAt"`
-	UploatedAt  string `json:"uploatedAt"`
+	UpdatedAt   string `json:"updatedAt"`
 }
 
 func (t *Task) New(a int, d string, s int, c string, u string) {
-	*t = Task{Id: a, Description: d, Status: s, CreatedAt: c, UploatedAt: u}
+	*t = Task{Id: a, Description: d, Status: s, CreatedAt: c, UpdatedAt: u}
 }
 
 func (t Task) TaskPrint() {
@@ -23,7 +23,7 @@ func (t Task) TaskPrint() {
 	fmt.Printf("description: %s\n", t.Description)
 	fmt.Printf("status: %s\n", t.GetStatus())
 	fmt.Printf("createdAt: %s\n", t.CreatedAt)
-	fmt.Printf("uploatedAt: %s\n\n", t.UploatedAt)
+	fmt.Printf("updatedAt: %s\n\n", t.UpdatedAt)
 }
 
 func (t Task) GetStatus() string {
@@ -88,8 +88,8 @@ func (t *TaskTracker) SetTrack(str string) Task {
 		minute = strconv.Itoa(m)
 	}
 	createdAt := day + "." + month + "." + year + ", " + hours + ":" + minute
-	uploatedAt := ""
-	return Task{id, str, status, createdAt, uploatedAt}
+	updatedAt := createdAt
+	return Task{id, str, status, createdAt, updatedAt}
 }
 
 func (t *TaskTracker) FindTaskInTracker(str string) bool {
@@ -128,4 +128,12 @@ func (t *TaskTracker) Delete(num int) {
 		t.TaskTrack[i].Id = i + 1
 	}
 	fmt.Printf("Task %d is deleted\n\n", num)
+}
+
+func (t *TaskTracker) MarkProgress(num, stat int) {
+	if num > t.Size {
+		fmt.Printf("Error, this ID (%d) is not found...\n\n", num)
+		return
+	}
+	t.TaskTrack[num-1].Status = stat
 }
