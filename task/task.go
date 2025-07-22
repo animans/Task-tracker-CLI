@@ -111,6 +111,30 @@ func (t TaskTracker) Print() {
 	}
 }
 
+func (t TaskTracker) PrintDone() {
+	for i := 0; i < t.Size; i++ {
+		if t.TaskTrack[i].Status == 2 {
+			t.TaskTrack[i].TaskPrint()
+		}
+	}
+}
+
+func (t TaskTracker) PrintNotDone() {
+	for i := 0; i < t.Size; i++ {
+		if t.TaskTrack[i].Status == 0 {
+			t.TaskTrack[i].TaskPrint()
+		}
+	}
+}
+
+func (t TaskTracker) PrintInProgress() {
+	for i := 0; i < t.Size; i++ {
+		if t.TaskTrack[i].Status == 1 {
+			t.TaskTrack[i].TaskPrint()
+		}
+	}
+}
+
 func (t *TaskTracker) Update(num int, str string) {
 	if num > t.Size {
 		fmt.Printf("Error, this ID (%d) is not found...\n\n", num)
