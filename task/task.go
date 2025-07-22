@@ -9,21 +9,34 @@ import (
 type Task struct {
 	Id          int    `json:"id"`
 	Description string `json:"description"`
-	Status      bool   `json:"status"`
+	Status      int    `json:"status"`
 	CreatedAt   string `json:"createdAt"`
 	UploatedAt  string `json:"uploatedAt"`
 }
 
-func (t *Task) New(a int, d string, s bool, c string, u string) {
+func (t *Task) New(a int, d string, s int, c string, u string) {
 	*t = Task{Id: a, Description: d, Status: s, CreatedAt: c, UploatedAt: u}
 }
 
 func (t Task) TaskPrint() {
 	fmt.Printf("id: %d\n", t.Id)
 	fmt.Printf("description: %s\n", t.Description)
-	fmt.Printf("status: %t\n", t.Status)
+	fmt.Printf("status: %s\n", t.GetStatus())
 	fmt.Printf("createdAt: %s\n", t.CreatedAt)
 	fmt.Printf("uploatedAt: %s\n\n", t.UploatedAt)
+}
+
+func (t Task) GetStatus() string {
+	switch t.Status {
+	case 0:
+		return "todo"
+	case 1:
+		return "in progress"
+	case 2:
+		return "done"
+	default:
+		return "Error status..."
+	}
 }
 
 type TaskTracker struct {
@@ -100,5 +113,19 @@ func (t *TaskTracker) Update(num int, str string) {
 		return
 	}
 	t.TaskTrack[num-1].Description = str
-	fmt.Printf("Task %d was updated\n\n", num)
+	fmt.Printf("Task %d is updated\n\n", num)
+}
+
+func (t *TaskTracker) Delete(num int) {
+	if num > t.Size {
+		fmt.Printf("Error, this ID (%d) is not found...\n\n", num)
+		return
+	}
+	copy(t.TaskTrack[num-1:], t.TaskTrack[num:])
+	t.TaskTrack = t.TaskTrack[:t.Size-1]
+	t.Size--
+	for i := num - 1; i < t.Size; i++ {
+		t.TaskTrack[i].Id = i + 1
+	}
+	fmt.Printf("Task %d is deleted\n\n", num)
 }
