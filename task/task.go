@@ -55,9 +55,7 @@ func (t *TaskTracker) Add(str string) {
 	fmt.Printf("Task added successfully (ID: %d)\n\n", t.Size)
 }
 
-func (t *TaskTracker) SetTrack(str string) Task {
-	id := t.Size + 1
-	status := 0
+func (t *TaskTracker) SetDate() string {
 	year := strconv.Itoa(time.Now().Year())
 	mo := int(time.Now().Month())
 	month := ""
@@ -87,7 +85,13 @@ func (t *TaskTracker) SetTrack(str string) Task {
 	} else {
 		minute = strconv.Itoa(m)
 	}
-	createdAt := day + "." + month + "." + year + ", " + hours + ":" + minute
+	return day + "." + month + "." + year + ", " + hours + ":" + minute
+}
+
+func (t *TaskTracker) SetTrack(str string) Task {
+	id := t.Size + 1
+	status := 0
+	createdAt := t.SetDate()
 	updatedAt := createdAt
 	return Task{id, str, status, createdAt, updatedAt}
 }
@@ -113,6 +117,7 @@ func (t *TaskTracker) Update(num int, str string) {
 		return
 	}
 	t.TaskTrack[num-1].Description = str
+	t.TaskTrack[num-1].UpdatedAt = t.SetDate()
 	fmt.Printf("Task %d is updated\n\n", num)
 }
 
