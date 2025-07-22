@@ -23,7 +23,7 @@ func (t Task) TaskPrint() {
 	fmt.Printf("description: %s\n", t.Description)
 	fmt.Printf("status: %t\n", t.Status)
 	fmt.Printf("createdAt: %s\n", t.CreatedAt)
-	fmt.Printf("uploatedAt: %s\n", t.UploatedAt)
+	fmt.Printf("uploatedAt: %s\n\n", t.UploatedAt)
 }
 
 type TaskTracker struct {
@@ -33,12 +33,13 @@ type TaskTracker struct {
 
 func (t *TaskTracker) Add(str string) {
 	if t.FindTaskInTracker(str) {
-		fmt.Printf("Error, this Task alrady exist\n")
+		fmt.Printf("Error, this Task alrady exist\n\n")
 		return
 	}
 	task := t.SetTrack(str)
 	t.Size++
 	t.TaskTrack = append(t.TaskTrack, task)
+	fmt.Printf("Task added successfully (ID: %d)\n\n", t.Size)
 }
 
 func (t *TaskTracker) SetTrack(str string) Task {
@@ -91,4 +92,13 @@ func (t TaskTracker) Print() {
 	for i := 0; i < t.Size; i++ {
 		t.TaskTrack[i].TaskPrint()
 	}
+}
+
+func (t *TaskTracker) Update(num int, str string) {
+	if num > t.Size {
+		fmt.Printf("Error, this ID (%d) is not found...\n\n", num)
+		return
+	}
+	t.TaskTrack[num-1].Description = str
+	fmt.Printf("Task %d was updated\n\n", num)
 }
