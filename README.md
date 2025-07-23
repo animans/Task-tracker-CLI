@@ -62,4 +62,4 @@ go build -o task-tracker
 ./task-tracker list todo
 ./task-tracker list in-progress
 ```
-https://github.com/animans/Task-tracker-CLI
+https://roadmap.sh/projects/task-tracker
