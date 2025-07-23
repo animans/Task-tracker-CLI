@@ -8,6 +8,14 @@ import (
 
 const path = "test.txt"
 
+func FileExists() bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir() // Проверяем, что это файл, а не каталог
+}
+
 func JSONToFile(tracker TaskTracker) {
 
 	jsonString := TaskTrackerToJSON(tracker)
