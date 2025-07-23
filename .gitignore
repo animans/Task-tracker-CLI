@@ -1,1 +1,3 @@
 task/task_test.go
+task/json_test.go
+test.txt
