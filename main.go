@@ -33,7 +33,14 @@ func main() {
 	case "mark-done":
 		tracker.MarkProgress(arg(), 2)
 	case "list":
-		tracker.Print()
+		if len(os.Args) == 3 {
+			tracker.PrintArg(os.Args[2])
+		} else if len(os.Args) == 2 {
+			tracker.Print()
+		} else {
+			fmt.Println("Error command")
+		}
+
 	default:
 		fmt.Println("Error command")
 	}

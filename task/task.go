@@ -111,25 +111,9 @@ func (t TaskTracker) Print() {
 	}
 }
 
-func (t TaskTracker) PrintDone() {
+func (t TaskTracker) PrintArg(str string) {
 	for i := 0; i < t.Size; i++ {
-		if t.TaskTrack[i].Status == 2 {
-			t.TaskTrack[i].TaskPrint()
-		}
-	}
-}
-
-func (t TaskTracker) PrintNotDone() {
-	for i := 0; i < t.Size; i++ {
-		if t.TaskTrack[i].Status == 0 {
-			t.TaskTrack[i].TaskPrint()
-		}
-	}
-}
-
-func (t TaskTracker) PrintInProgress() {
-	for i := 0; i < t.Size; i++ {
-		if t.TaskTrack[i].Status == 1 {
+		if t.TaskTrack[i].GetStatus() == str {
 			t.TaskTrack[i].TaskPrint()
 		}
 	}
